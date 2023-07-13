@@ -2,24 +2,23 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../components/my_textfield.dart';
 import '../components/my_button.dart';
-import '../components/square_tile.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final Function()? onTap;
-  LoginPage({super.key, required this.onTap});
+  RegisterPage({super.key, required this.onTap});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPage();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPage extends State<RegisterPage> {
   //Text editing Controller
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
 
   // ignore: non_constant_identifier_names
-  void SignInUser() async {
+  void SignInUserUp() async {
     //show msg dialog
     showDialog(
       context: context,
@@ -83,10 +82,10 @@ class _LoginPageState extends State<LoginPage> {
                 height: 100,
               ),
 
-              const SizedBox(height: 50),
+              const SizedBox(height: 20),
 
               // Text
-              Text('Welcome to KBN Skin Essentials!',
+              Text('Let\'s create an account!',
                   style: TextStyle(color: Colors.grey[700], fontSize: 16)),
 
               const SizedBox(height: 25),
@@ -109,81 +108,19 @@ class _LoginPageState extends State<LoginPage> {
 
               const SizedBox(height: 10),
 
-              // forgot password
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                  Text(
-                    'Forgot Password?',
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 14,
-                    ),
-                  ),
-                ]),
+              // confirm password textfile
+              MyTextField(
+                controller: passwordController,
+                hintText: 'Confirm Password',
+                obscureText: true,
               ),
 
               const SizedBox(height: 25),
 
               // signin button
               MyButton(
-                onTap: SignInUser,
-                txtLabel: 'Sign in',
-              ),
-
-              const SizedBox(height: 50),
-
-              // or continue with
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        thickness: 0.5,
-                        color: Colors.grey[400],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Text(
-                        'Or continue with',
-                        style: TextStyle(
-                          color: Colors.grey[700],
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        thickness: 0.5,
-                        color: Colors.grey[400],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 50),
-
-              // other platform
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // guest
-                  SquareTile(
-                    imagePath: 'lib/images/guest.jpg',
-                  ),
-                  SizedBox(width: 10),
-                  // google
-                  SquareTile(
-                    imagePath: 'lib/images/google.png',
-                  ),
-                  SizedBox(width: 10),
-                  // facebook
-                  SquareTile(
-                    imagePath: 'lib/images/facebook.png',
-                  ),
-                ],
+                onTap: SignInUserUp,
+                txtLabel: 'Sign Up',
               ),
 
               const SizedBox(height: 50),
@@ -193,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'not Registered?',
+                    'Already have an account?',
                     style: TextStyle(
                       color: Colors.grey[700],
                     ),
@@ -202,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                   GestureDetector(
                     onTap: widget.onTap,
                     child: const Text(
-                      'Pre-Register now',
+                      'Login now',
                       style: TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.bold,
