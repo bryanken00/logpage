@@ -14,8 +14,8 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPage extends State<RegisterPage> {
   //Text editing Controller
   final emailController = TextEditingController();
-
   final passwordController = TextEditingController();
+  final confirmpasswordController = TextEditingController();
 
   // ignore: non_constant_identifier_names
   void SignInUserUp() async {
@@ -30,13 +30,15 @@ class _RegisterPage extends State<RegisterPage> {
     );
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-      if (mounted) {
-        Navigator.pop(context);
+      if (passwordController.text == confirmpasswordController.text) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+      } else {
+        errorMessage('Password not match!');
       }
+      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       errorMessage(e.code);
@@ -75,7 +77,6 @@ class _RegisterPage extends State<RegisterPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 50),
               // logo
               Image.asset(
                 'lib/images/KBN_icon.png',
@@ -110,7 +111,7 @@ class _RegisterPage extends State<RegisterPage> {
 
               // confirm password textfile
               MyTextField(
-                controller: passwordController,
+                controller: confirmpasswordController,
                 hintText: 'Confirm Password',
                 obscureText: true,
               ),
@@ -120,7 +121,7 @@ class _RegisterPage extends State<RegisterPage> {
               // signin button
               MyButton(
                 onTap: SignInUserUp,
-                txtLabel: 'Sign Up',
+                txtLabel: 'Register',
               ),
 
               const SizedBox(height: 50),
